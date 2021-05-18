@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  deno:
+    build:
+      context: .
+      dockerfile: ./.docker/deno/Dockerfile
+    restart: always
+    env_file:
+      - .env
