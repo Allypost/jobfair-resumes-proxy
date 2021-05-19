@@ -51,7 +51,19 @@ function queryBy(ids: number[]) {
 
 async function buildResponse(): Promise<string> {
   // console.time('query');
-  const { rows: resumes } = await runQuery(`select * from resumes`);
+  const { rows: resumes } = await runQuery(`
+  select
+    u.first_name,
+    u.last_name,
+    u.email,
+    u.phone,
+    r.*
+  from
+    resumes r
+  left join
+    users u
+      on u.id = r.user_id
+  `);
   const ids = resumes.map(({ id }) => id as number);
   const idQuery = queryBy(ids);
   const [
